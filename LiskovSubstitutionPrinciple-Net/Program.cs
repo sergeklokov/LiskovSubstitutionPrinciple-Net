@@ -2,12 +2,22 @@
 {
     new Product("Reusable water bottle", 12.99m),
     
-    // A Book is substituted for Product here and can be stored in the same cart.
+    // A Book can be used as a Product and stored in the general cart.
     new Book("The Pragmatic Programmer", 42.50m, "David Thomas and Andrew Hunt", "978-0135957059")
 };
 
-// PrintReceipt accepts Product items, but works with the Book in this cart without special handling.
-PrintReceipt(shoppingCart);
+PrintReceipt(shoppingCart); // PrintReceipt accepts Product items, but works with the Book without special handling.
+
+var booksOnlyCart = new List<Book>
+{
+    new Book("Clean Code", 39.99m, "Robert C. Martin", "978-0132350884")
+
+    // This insertion does not compile: a List<Book> only accepts Book objects.
+    // We can't substitute Book with Product, even though Book is a subclass of Product.
+    //new Product("Reusable shopping bag", 2.99m);
+};
+
+Console.WriteLine($"Books-only cart contains {booksOnlyCart.Count} book(s).");
 
 static void PrintReceipt(IEnumerable<Product> products)
 {
@@ -28,9 +38,6 @@ public class Product
 {
     public Product(string name, decimal price)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        ArgumentOutOfRangeException.ThrowIfNegative(price);
-
         Name = name;
         Price = price;
     }

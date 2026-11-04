@@ -54,4 +54,7 @@ public sealed class Book(string name, decimal price, string author, string isbn)
     public string Isbn { get; } = isbn;
 
     public override string GetDescription() => $"{Name} by {Author} (ISBN: {Isbn})";
+
+    // Breaking behavior: it would violate the Liskov Substitution Principle.
+    //public override string GetDescription() => throw new Exception("Books don't have descriptions!");
 }
